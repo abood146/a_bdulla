@@ -97,6 +97,7 @@ body.admin #bar{display:flex}
 .gc span{position:absolute;bottom:6px;left:6px;background:var(--teal);color:#fff;border-radius:99px;padding:0 10px;font-size:.8rem}
 #pvb{display:none;position:fixed;bottom:14px;right:14px;z-index:40;background:var(--brass);color:#fff;border:0;border-radius:99px;padding:10px 18px;box-shadow:0 6px 18px #0005}body.pv #pvb{display:block}
 dialog{border:0;border-radius:16px;padding:20px;width:min(440px,92vw);font-family:inherit}
+#toast{display:none;position:fixed;bottom:70px;left:50%;transform:translateX(-50%);background:#222;color:#fff;padding:10px 18px;border-radius:10px;z-index:60;max-width:90vw;text-align:center}
 dialog::backdrop{background:#0008}
 dialog label{display:block;font-size:.85rem;margin-top:10px;color:var(--mut)}
 dialog input{width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:8px;font:inherit}
@@ -112,7 +113,7 @@ dialog button.go{background:var(--teal);color:#fff;border-color:var(--teal)}
 <div id="ov" data-act="menu"></div><button id="pvb" data-act="unpv">⬅ العودة للتعديل</button><input type="file" id="pi" hidden accept="application/pdf"><input type="file" id="fi" hidden accept="image/*,application/pdf" multiple>
 <div id="bar"><span id="st">وضع التعديل</span>
 <button data-act="addsec" data-p="">+ قسم</button><button data-act="settings">الواجهة</button><button data-act="chpw">كلمة المرور</button><button class="go" data-act="save">حفظ</button><button data-act="logout">خروج</button></div>
-<dialog id="dlg"><form method="dialog" id="df"></form></dialog>
+<div id="toast"></div><dialog id="dlg"><form method="dialog" id="df"></form></dialog>
 
 <script>
 const $=s=>document.querySelector(s), esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -190,8 +191,13 @@ function main(){const m=$('#main'),S=D.settings;
  m.innerHTML=h}
 function schedH(s){const c=admin?'contenteditable="true"':'',sc=s.schedule;
  return(admin?`<div class="adm"><button data-act="radd">+ صف</button><button data-act="rdel">− صف</button><button data-act="cadd">+ عمود</button><button data-act="cdel">− عمود</button></div>`:'')+`<div class="tw"><table><tr>${sc.head.map((x,i)=>`<th ${c} data-h="${i}">${esc(x)}</th>`).join('')}</tr>${sc.rows.map((r,ri)=>`<tr>${r.map((x,ci)=>`<td ${c} data-r="${ri}" data-c="${ci}" ${x=='استراحة'?'data-brk':''}>${esc(x)}</td>`).join('')}</tr>`).join('')}</table></div><div style="margin-top:8px"><button class="mini" style="position:static" onclick="print()">🖨 طباعة</button></div>`}
-function ask(title,fields,cb){const df=$('#df');df.innerHTML=`<h3 class="hd">${title}</h3>`+fields.map(([k,l,v])=>`<label>${l}<input name="${k}" value="${esc(v)}"></label>`).join('')+'<div class="row"><button class="go" value="ok">حفظ</button><button value="x">إلغاء</button></div>';
- const d=$('#dlg');d.onclose=()=>{if(d.returnValue=='ok'){cb(Object.fromEntries(new FormData(df)));}};d.showModal()}
+function ask(title,fields,cb,btn){const df=$('#df');df.innerHTML=`<h3 class="hd">${title}</h3>`+fields.map(([k,l,v,t])=>`<label>${l}<input name="${k}" type="${t||'text'}" value="${esc(v)}" autocomplete="off"></label>`).join('')+`<div class="row"><button class="go" value="ok">${btn||'حفظ'}</button><button value="x">إلغاء</button></div>`;
+ const d=$('#dlg');d.onclose=()=>{if(d.returnValue=='ok')cb(Object.fromEntries(new FormData(df)))};d.showModal()}
+function toast(t,ms){const e=$('#toast');e.textContent=t;e.style.display='block';clearTimeout(e._t);e._t=setTimeout(()=>e.style.display='none',ms||3500)}
+async function doLogin(){let needs;try{const r=await fetch('/api/data?status',{cache:'no-store'});needs=(await r.json()).setup}catch(e){return toast('تعذر الاتصال بخدمة الحفظ. تأكدي أن مجلد netlify/functions مرفوع وأن النشر نجح في Netlify.',9000)}
+ if(needs)return ask('إنشاء كلمة مرور التعديل',[['a','كلمة المرور (٨ أحرف على الأقل)','','password'],['b','أعيدي كتابتها','','password']],async v=>{if(v.a.length<8)return toast('قصيرة، لازم ٨ أحرف أو أكثر');if(v.a!==v.b)return toast('كلمتا المرور غير متطابقتين');
+  const r=await fetch('/api/data',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({setup:v.a})});if(!r.ok)return toast('تعذر إنشاء كلمة المرور');pw=v.a;sessionStorage.pw=pw;admin=true;await save();route();toast('تم إنشاء كلمة المرور ✓')},'إنشاء');
+ ask('دخول المعلمة',[['a','كلمة المرور','','password']],async v=>{if(await verify(v.a)){pw=v.a;sessionStorage.pw=pw;admin=true;route();toast('وضع التعديل مفعّل')}else toast('كلمة المرور غير صحيحة')},'دخول')}
 document.addEventListener('mousedown',e=>{if(e.target.closest('[data-cmd]'))e.preventDefault()});
 document.addEventListener('input',e=>{if(!admin)return;const t=e.target,f=find(cur);if(!f)return;const s=f.s;
  if(t.dataset.f=='html')s.pages[pg].html=t.innerHTML;else if(t.dataset.f=='color'){s.color=t.value}
@@ -209,12 +215,8 @@ document.addEventListener('click',async e=>{const b=e.target.closest('[data-act]
  if(a=='pdfi')return $('#pi').click();
  if(a=='preview'){pv=true;admin=false;return route()}
  if(a=='upload')return $('#fi').click();
- if(a=='login'){if(admin)return;let needs=false;try{needs=(await (await fetch('/api/data?status',{cache:'no-store'})).json()).setup}catch(e){}
-  if(needs){const n=prompt('أول مرة: أنشئي كلمة مرور للتعديل (٨ أحرف على الأقل):');if(!n)return;if(n.length<8)return alert('قصيرة، لازم ٨ أحرف أو أكثر');if(prompt('أعيدي كتابتها للتأكيد:')!==n)return alert('غير متطابقة');
-   const r=await fetch('/api/data',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({setup:n})});if(!r.ok)return alert('تعذر إنشاء كلمة المرور');pw=n;sessionStorage.pw=n;admin=true;await save();route();return}
-  const p=prompt('كلمة مرور التعديل:');if(!p)return;if(await verify(p)){pw=p;sessionStorage.pw=p;admin=true;route();st('وضع التعديل')}else alert('كلمة المرور غير صحيحة');return}
- if(a=='chpw'){const n=prompt('كلمة المرور الجديدة (٨ أحرف على الأقل):');if(!n||n.length<8)return;const r=await fetch('/api/data',{method:'POST',headers:{'x-admin-password':pw,'content-type':'application/json'},body:JSON.stringify({change:n})});if(r.ok){pw=n;sessionStorage.pw=n;alert('تم تغيير كلمة المرور')}else alert('فشل التغيير');return}
- if(a=='logout'){admin=false;pw='';sessionStorage.removeItem('pw');return route()}
+ if(a=='login'){if(admin)return;return doLogin()}
+ if(a=='chpw')return ask('تغيير كلمة المرور',[['a','كلمة المرور الجديدة (٨ أحرف على الأقل)','','password']],async v=>{if(v.a.length<8)return toast('قصيرة، لازم ٨ أحرف');const r=await fetch('/api/data',{method:'POST',headers:{'x-admin-password':pw,'content-type':'application/json'},body:JSON.stringify({change:v.a})});if(r.ok){pw=v.a;sessionStorage.pw=v.a;toast('تم تغيير كلمة المرور')}else toast('فشل التغيير')},'تغيير');
  if(a=='save')return save();
  if(a=='settings'){const S=D.settings;return ask('إعدادات الواجهة',[['name','الاسم',S.name],['role','المسمى الوظيفي',S.role],['school','المدرسة',S.school],['year','العام الدراسي',S.year],['tagline','عنوان الملف',S.tagline],['photo','رابط الصورة الشخصية (درايف)',S.photo]],v=>{Object.assign(D.settings,v);touch();route()})}
  if(a=='addsec'){const t=prompt('اسم القسم الجديد:');if(!t)return;const sch=confirm('هل هذا القسم جدول حصص؟\nموافق = جدول، إلغاء = قسم عادي');
