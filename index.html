@@ -7,27 +7,31 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Readex+Pro:wght@500;700&display=swap" rel="stylesheet">
 <style>
-:root{--ink:#10332f;--teal:#0f4c47;--sand:#f6f0e4;--paper:#fffdf8;--brass:#b8862f;--line:#e4dccb;--mut:#6b7a77;--r:14px}
+:root{--ink:#10332f;--teal:#0f4c47;--sand:#f6f0e4;--paper:#fffdf8;--brass:#b8862f;--line:#e4dccb;--mut:#6b7a77;--r:14px;--fb:'IBM Plex Sans Arabic';--fh:'Readex Pro';--fs:16px;--lh:1.8;--mw:1000px}
 *{box-sizing:border-box;margin:0}
 html{scroll-behavior:smooth}
-body{font-family:'IBM Plex Sans Arabic',Tahoma,sans-serif;background:var(--sand);color:var(--ink);line-height:1.8;font-size:16px}
-h1,h2,h3,.hd{font-family:'Readex Pro','IBM Plex Sans Arabic',Tahoma,sans-serif}
+body{font-family:var(--fb),Tahoma,sans-serif;background:var(--sand);color:var(--ink);line-height:var(--lh);font-size:var(--fs)}
+h1,h2,h3,.hd,.top b{font-family:var(--fh),var(--fb),Tahoma,sans-serif}
 a{color:inherit;text-decoration:none}button{font:inherit;cursor:pointer}
-.top{position:sticky;top:0;z-index:20;background:var(--teal);color:#fff;display:flex;align-items:center;gap:12px;padding:10px 16px;height:60px}
+.top{position:sticky;top:0;z-index:20;background:var(--topc,var(--teal));color:#fff;display:flex;align-items:center;gap:12px;padding:10px 16px;height:60px}
 .top b{font-family:'Readex Pro',sans-serif;font-weight:500;font-size:1rem;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .top .lg{height:38px;max-width:90px;object-fit:contain;border-radius:8px}
 .ib{background:rgba(255,255,255,.14);border:0;color:#fff;width:40px;height:40px;border-radius:10px;font-size:1.2rem}
-nav{position:fixed;right:0;top:60px;bottom:0;width:300px;max-width:86vw;z-index:19;background:var(--paper);border-left:1px solid var(--line);padding:14px 0 90px;overflow:auto;transform:translateX(100%);transition:transform .25s;box-shadow:-8px 0 30px #0003}
+nav{position:fixed;right:0;top:60px;bottom:0;width:300px;max-width:86vw;z-index:19;background:var(--navc,var(--paper));color:var(--navt,inherit);border-left:1px solid var(--line);padding:14px 0 90px;overflow:auto;transform:translateX(100%);transition:transform .25s;box-shadow:-8px 0 30px #0003}
 body.open nav{transform:none}
+body[data-mv=l] nav{right:auto;left:0;transform:translateX(-100%);border-left:0;border-right:1px solid var(--line);box-shadow:8px 0 30px #0003}body[data-mv=l].open nav{transform:none}
+#bgl{position:fixed;inset:0;z-index:-1;pointer-events:none;background-repeat:no-repeat}
+main.enter{animation:pin .45s ease-out}@keyframes pin{from{opacity:0;transform:translateX(var(--mvx,40px))}to{opacity:1;transform:none}}
 #ov{position:fixed;inset:60px 0 0 0;background:#0005;z-index:18;display:none}body.open #ov{display:block}
-nav a{display:flex;align-items:center;gap:10px;padding:8px 18px;font-size:.95rem;border-right:5px solid transparent}
+nav a{display:flex;align-items:center;gap:10px;padding:8px 18px;font-size:.95rem}
+[data-side=r] nav a{border-right:5px solid transparent}[data-side=l] nav a{border-left:5px solid transparent}
 nav a i{width:10px;height:22px;border-radius:5px;background:var(--c);flex:none}
-nav a:hover,nav a.on{background:var(--sand);border-right-color:var(--c);font-weight:600}
+nav a:hover,nav a.on{background:var(--sand);border-color:var(--c);font-weight:600}
 nav .sub a{padding-right:38px;font-size:.88rem}
 main{max-width:1000px;margin:0 auto;padding:28px clamp(14px,4vw,48px) 120px}
 .ic{width:30px;height:30px;border-radius:calc(var(--r)*.6);background:color-mix(in srgb,var(--c) 18%,white);color:var(--c);display:grid;place-items:center;flex:none;font-size:1.05rem;overflow:hidden}.ic img{width:100%;height:100%;object-fit:cover}
-.hero{background:var(--teal);color:#fff;border-radius:calc(var(--r)*1.5);padding:34px 26px;display:grid;grid-template-columns:auto 1fr;gap:26px;align-items:center;position:relative;overflow:hidden}
-.hero:before{content:"";position:absolute;left:-60px;top:-60px;width:220px;height:220px;border-radius:50%;border:30px solid #ffffff12}
+.hero{background:var(--heroc,var(--teal));color:var(--herot,#fff);border-radius:calc(var(--r)*1.5);padding:34px 26px;display:grid;grid-template-columns:auto 1fr;gap:26px;align-items:center;position:relative;overflow:hidden}
+.dc{position:absolute;inset:0;pointer-events:none}.dc.ring:before{content:'';position:absolute;left:-60px;top:-60px;width:220px;height:220px;border-radius:50%;border:30px solid #ffffff24}.hero>*:not(.dc){position:relative;z-index:1}
 .ph{width:140px;height:170px;background:#ffffff1f center/cover;border:4px solid var(--brass);display:grid;place-items:center;font-size:3rem;border-radius:70px 70px 18px 18px}
 [data-shape=circle] .ph{border-radius:50%;height:140px}[data-shape=round] .ph{border-radius:28px}[data-shape=square] .ph{border-radius:0}
 .hero small{color:var(--brass);filter:brightness(1.6);font-size:.95rem}
@@ -36,12 +40,14 @@ main{max-width:1000px;margin:0 auto;padding:28px clamp(14px,4vw,48px) 120px}
 @media(max-width:560px){.hero{grid-template-columns:1fr;text-align:center;justify-items:center}.meta{justify-content:center}}
 .sec-t{font-size:1.15rem;margin:30px 0 12px;color:var(--teal)}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px;margin-top:14px}
-.card{background:var(--paper);border-radius:6px var(--r) var(--r) 6px;padding:14px 16px 14px 12px;border-right:8px solid var(--c);display:flex;align-items:center;gap:10px;min-height:68px;box-shadow:0 1px 0 var(--line);transition:transform .15s}
+.card{background:var(--paper);padding:14px 16px;color:var(--ctc,inherit);display:flex;align-items:center;gap:10px;min-height:68px;box-shadow:0 1px 0 var(--line);transition:transform .15s}
 .card:hover{transform:translateX(-3px)}.card b{font-weight:600;font-size:.97rem;line-height:1.5}.card em{font-style:normal;color:var(--mut);font-size:.8rem;margin-right:auto}
+[data-side=r] .card{border-right:8px solid var(--c);border-radius:6px var(--r) var(--r) 6px}[data-side=l] .card{border-left:8px solid var(--c);border-radius:var(--r) 6px 6px var(--r)}
 [data-cs=box] .card{border:2px solid var(--c);border-radius:var(--r)}
 [data-cs=solid] .card{background:var(--c);color:#fff;border:0;border-radius:var(--r)}[data-cs=solid] .card .ic{background:#ffffff30;color:#fff}[data-cs=solid] .card em{color:#ffffffcc}
 .crumb{font-size:.85rem;color:var(--mut)}.crumb a:hover{color:var(--teal)}
-.pt{font-size:clamp(1.5rem,4vw,2rem);margin:6px 0 18px;padding-right:16px;border-right:8px solid var(--c);display:flex;align-items:center;gap:12px}
+.pt{font-size:clamp(1.5rem,4vw,2rem);margin:6px 0 18px;display:flex;align-items:center;gap:12px}
+[data-side=r] .pt{border-right:8px solid var(--c);padding-right:16px}[data-side=l] .pt{border-left:8px solid var(--c);padding-left:16px}
 .pt .ic{width:44px;height:44px;font-size:1.5rem}
 .ed{background:var(--paper);border-radius:var(--r);padding:20px 22px;min-height:80px;border:1px solid var(--line);margin-top:16px}
 .ed h3{color:var(--teal);margin:14px 0 4px;font-size:1.15rem}.ed ul,.ed ol{padding-right:24px}.ed img{max-width:100%}
@@ -85,6 +91,12 @@ main{max-width:1000px;margin:0 auto;padding:28px clamp(14px,4vw,48px) 120px}
 body.admin .sch td[data-act],body.admin .sch th[data-act]{cursor:pointer}
 .cvh{display:flex;gap:20px;align-items:center;background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:18px;margin-top:10px}
 .cvh .ph{width:96px;height:116px;font-size:2rem;flex:none}
+/* qr + controls */
+.qrg{display:flex;gap:18px;flex-wrap:wrap;justify-content:center;margin-top:14px}.qrg.col{flex-direction:column;align-items:center;flex-wrap:nowrap}
+.qrg.grid{display:grid;grid-template-columns:repeat(2,var(--qs));justify-content:center}
+.qri{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;position:relative;max-width:100%}
+.qri svg{width:var(--qs);height:var(--qs);max-width:100%;display:block;background:#fff;padding:4px;border-radius:12px;border:1px solid var(--line)}
+.mc{position:absolute;top:6px;left:6px;display:flex;gap:3px;z-index:3}.mc button{background:#fff;border:1px solid var(--line);border-radius:8px;padding:0 8px;font-size:.85rem}.mc .r{color:#b3261e}
 /* admin */
 .adm{background:#fff4d6;border:1px dashed var(--brass);border-radius:12px;padding:10px;display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;align-items:center;font-size:.88rem}
 .adm button,.tb button,.mini{background:#fff;border:1px solid var(--line);border-radius:8px;padding:5px 11px;font-size:.88rem}
@@ -102,17 +114,18 @@ body.admin #bar{display:flex}
 dialog{border:0;border-radius:16px;padding:20px;width:min(440px,92vw);font-family:inherit;max-height:90vh;overflow:auto}
 dialog::backdrop{background:#0008}dialog label{display:block;font-size:.85rem;margin-top:10px;color:var(--mut)}
 dialog input,dialog select{width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:8px;font:inherit;background:#fff}dialog input[type=color]{height:40px;padding:2px}
-dialog .row{display:flex;gap:8px;margin-top:16px}dialog button{padding:8px 18px;border-radius:8px;border:1px solid var(--line);background:#fff;font:inherit}dialog button.go{background:var(--teal);color:#fff;border-color:var(--teal)}
+dialog .upb{margin-top:12px;width:100%}dialog .row{display:flex;gap:8px;margin-top:16px}dialog button{padding:8px 18px;border-radius:8px;border:1px solid var(--line);background:#fff;font:inherit}dialog button.go{background:var(--teal);color:#fff;border-color:var(--teal)}
 @media print{.top,nav,#bar,.adm,.tb,.bkbar{display:none!important}main{padding:0}}
 </style>
 </head>
 <body>
+<div id="bgl"></div>
 <header class="top"><button class="ib" id="menu" data-act="menu" aria-label="القائمة">☰</button><img id="lg" class="lg" alt="" hidden><b id="ttl">ملف الإنجاز المهني</b><a class="ib" href="#/home" style="display:grid;place-items:center" aria-label="الرئيسية">⌂</a></header>
 <nav id="nav"></nav><main id="main"></main>
 <div id="ov" data-act="menu"></div>
 <button id="pvb" data-act="unpv">⬅ العودة للتعديل</button><input type="file" id="pi" hidden accept="application/pdf"><input type="file" id="fi" hidden accept="image/*,application/pdf" multiple>
 <div id="bar"><span id="st">وضع التعديل</span>
-<button data-act="addsec" data-p="">+ قسم</button><button data-act="settings">الواجهة</button><button data-act="theme">🎨 التصميم</button><button data-act="uplogo">شعار</button><button data-act="upphoto">صورتي</button><button data-act="chpw">كلمة المرور</button><button class="go" data-act="save">حفظ</button><button data-act="logout">خروج</button></div>
+<button data-act="addsec" data-p="">+ قسم</button><button data-act="settings">الواجهة</button><button data-act="theme">🎨 التصميم</button><button data-act="det">⚙ تفاصيل</button><button data-act="deco">✨ الزخارف</button><button data-act="bgd">🖼 الخلفية</button><button data-act="uplogo">شعار</button><button data-act="upphoto">صورتي</button><button data-act="chpw">كلمة المرور</button><button class="go" data-act="save">حفظ</button><button data-act="logout">خروج</button></div>
 <div id="toast"></div><dialog id="dlg"><form method="dialog" id="df"></form></dialog>
 <script>
 const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -120,7 +133,7 @@ const uid=()=>Math.random().toString(36).slice(2,9);
 const COL=['#e8b72f','#e5702a','#a82255','#2f8f4e','#9b2a98','#3d9bd6','#d63a34','#4db35f','#7a7a7a','#1e4f8f','#8dc63f','#c3a27c','#5bc4b8','#2a6cb5'];
 const NAMES=['الهدف من الملف','أهداف سياسة التعليم في المملكة','السيرة الذاتية','مدونة السلوك الوظيفي','الرؤية والرسالة','الدورات','الجداول','شهادات التطوع','المبادرات','الاستراتيجيات المستخدمة','أوراق العمل','الأنشطة المنفذة داخل المدرسة','الاختبارات','تحليل وتصنيف نتائج الطالبات','الفهم القرائي','سجل المتابعة','سجل رصد الدرجات','الخطة الإثرائية','الخطة العلاجية','تحفيز الطالبات (شهادات)','وسائل التواصل مع أولياء الأمور','تصنيف الطالبات حسب المستوى','خطة التعلم الأسبوعية','استخدام برنامج تقني'];
 const CVHTML='<h3>البيانات الشخصية</h3><ul><li>الاسم: …</li><li>الجنسية: …</li><li>التخصص: …</li><li>التواصل: …</li></ul><h3>المؤهلات العلمية</h3><ul><li>…</li></ul><h3>الخبرات العملية</h3><ul><li>…</li></ul><h3>المهارات</h3><ul><li>…</li></ul>';
-const TH0={p:'#0f4c47',a:'#b8862f',bg:'#f6f0e4',card:'#fffdf8',ink:'#10332f',r:14,shape:'arch',cs:'stripe',dir:'rtl',order:'rf',logo:''};
+const TH0={p:'#0f4c47',a:'#b8862f',bg:'#f6f0e4',card:'#fffdf8',ink:'#10332f',r:14,shape:'arch',cs:'stripe',side:'l',dir:'rtl',order:'rf',mv:'r',nums:'hi',logo:'',ff:'IBM Plex Sans Arabic',fh:'Readex Pro',fs:16,lh:1.8,mw:1000,topc:'',navc:'',navt:'',heroc:'',herot:'',ctc:'',deco:'ring',dc:'#ffffff',do:14,ds:90,dside:'full',dtext:'ح م',dimg:'',bgi:{img:'',op:30,size:'cover',z:100,x:50,y:50}};
 function newSched(){const K={'ثاني 1':'#2e7d4f','رابع 2':'#2a8a8a','رابع 1':'#7b3fa0','ثاني 2':'#2a6cb5','خامس 2':'#d9772b'},
  Q='القرآن الكريم والدراسات الإسلامية',F='التربية الفنية',L='المهارات الحياتية والأسرية',R='المهارات الرقمية',B='التربية البدنية والدفاع عن النفس',
  rows=[[['ثاني 1',Q],['رابع 2',L],0,0,['رابع 1',L],['ثاني 1',F],0],[0,['ثاني 1',F],0,0,0,['رابع 1',R],['ثاني 1',Q]],[0,['رابع 1',R],['ثاني 1',Q],0,['ثاني 2',B],0,0],[['ثاني 1',Q],0,0,['ثاني 2',B],0,['خامس 2',B],0],[0,['ثاني 2',B],['خامس 2',B],0,['ثاني 1',Q],0,0]],cells={};
@@ -142,22 +155,33 @@ function ico(s){return s.icon?`<span class="ic" style="--c:${s.color}">${isImg(s
 function norm(l){l.forEach(s=>{if(!s.pages)s.pages=[{html:s.html||'',media:[...(s.images||[]).map(u=>({k:'img',u})),...(s.links||[]).map(x=>({k:'link',u:x.u,t:x.t}))]}];
  if(s.type=='schedule'&&(!s.schedule||!s.schedule.cells))s.schedule=newSched();s.view=s.view||'book';s.spread=s.spread||1;s.icon=s.icon||'';s.bg=s.bg||'';norm(s.children||[])})}
 async function load(){try{const r=await fetch('/api/data',{cache:'no-store'});const d=await r.json();if(d&&d.sections)D=d}catch(e){}
- D.theme={...TH0,...(D.theme||{})};norm(D.sections);if(pw){admin=await verify(pw)}route()}
+ D.theme={...TH0,...(D.theme||{})};D.theme.bgi={...TH0.bgi,...(D.theme.bgi||{})};norm(D.sections);if(pw){admin=await verify(pw)}route()}
 async function verify(p){try{const r=await fetch('/api/data',{method:'POST',headers:{'x-admin-password':p,'content-type':'application/json'},body:'{"verify":true}'});return r.ok}catch(e){return false}}
 async function save(){if(!admin)return;st('جاري الحفظ…');try{const r=await fetch('/api/data',{method:'POST',headers:{'x-admin-password':pw,'content-type':'application/json'},body:JSON.stringify(D)});st(r.ok?'تم الحفظ ✓':'فشل الحفظ — سجلي الدخول من جديد')}catch(e){st('فشل الحفظ — لا يوجد اتصال')}}
-function applyTheme(){const t=D.theme,r=document.documentElement.style,f=cur!='home'&&find(cur);r.setProperty('--teal',t.p);r.setProperty('--brass',t.a);r.setProperty('--sand',(f&&f.s.bg)||t.bg);r.setProperty('--paper',t.card);r.setProperty('--ink',t.ink);r.setProperty('--r',(+t.r||0)+'px');document.body.dataset.shape=t.shape;document.body.dataset.cs=t.cs;
- const l=$('#lg');l.hidden=!t.logo;if(t.logo)l.src=img(t.logo)}
-function route(){cur=(location.hash.match(/#\/(.+)/)||[])[1]||'home';document.body.classList.toggle('admin',admin);document.body.classList.toggle('pv',pv);document.body.classList.remove('open');if(cur!=last){pg=0;fb=false;last=cur;scrollTo(0,0)}
+const LF=new Set();function loadFont(n){if(!n||LF.has(n)||n=='IBM Plex Sans Arabic'||n=='Readex Pro')return;LF.add(n);const l=document.createElement('link');l.rel='stylesheet';l.href='https://fonts.googleapis.com/css2?family='+n.replace(/ /g,'+')+':wght@400;700&display=swap';document.head.appendChild(l)}
+function applyTheme(){const t=D.theme,r=document.documentElement.style,f=cur!='home'&&find(cur),S=f&&f.s,set=(k,v)=>v?r.setProperty(k,v):r.removeProperty(k);
+ r.setProperty('--teal',t.p);r.setProperty('--brass',t.a);r.setProperty('--sand',(S&&S.bg)||t.bg);r.setProperty('--paper',t.card);r.setProperty('--ink',t.ink);r.setProperty('--r',(+t.r||0)+'px');
+ set('--fb',"'"+t.ff+"'");set('--fh',"'"+t.fh+"'");r.setProperty('--fs',(+t.fs||16)+'px');r.setProperty('--lh',+t.lh||1.8);r.setProperty('--mw',(+t.mw||1000)+'px');
+ set('--topc',t.topc);set('--navc',t.navc);set('--navt',t.navt);set('--heroc',t.heroc);set('--herot',t.herot);set('--ctc',t.ctc);loadFont(t.ff);loadFont(t.fh);
+ const b=document.body;b.dataset.shape=t.shape;b.dataset.cs=t.cs;b.dataset.side=t.side;b.dataset.mv=t.mv;r.setProperty('--mvx',t.mv=='l'?'-40px':'40px');
+ const g=(S&&S.bgi&&S.bgi.img)?S.bgi:t.bgi,l=$('#bgl');l.style.backgroundImage=g.img?`url("${img(g.img)}")`:'none';l.style.opacity=(+g.op||0)/100;l.style.backgroundSize=g.size=='zoom'?(+g.z||100)+'%':g.size;l.style.backgroundPosition=(+g.x)+'% '+(+g.y)+'%';
+ const lg=$('#lg');lg.hidden=!t.logo;if(t.logo)lg.src=img(t.logo)}
+function route(){cur=(location.hash.match(/#\/(.+)/)||[])[1]||'home';document.body.classList.toggle('admin',admin);document.body.classList.toggle('pv',pv);document.body.classList.remove('open');if(cur!=last){pg=0;fb=false;last=cur;scrollTo(0,0);const mm=$('#main');mm.classList.remove('enter');void mm.offsetWidth;mm.classList.add('enter')}
  $('#ttl').textContent=D.settings.tagline||'ملف الإنجاز';document.title=D.settings.name+' | '+D.settings.tagline;applyTheme();
- $('#nav').innerHTML=navH(D.sections);main()}
+ $('#nav').innerHTML=navH(D.sections);main();nums()}
 function navH(l){return l.map(s=>`<a href="#/${s.id}" class="${s.id==cur?'on':''}" style="--c:${s.color}">${ico(s)||'<i></i>'}${esc(s.title)}</a>`+(s.children.length&&inTree(s,cur)?`<div class="sub">${navH(s.children)}</div>`:'')).join('')}
 function inTree(s,id){return s.id==id||s.children.some(c=>inTree(c,id))}
-const card=s=>`<a class="card" href="#/${s.id}" style="--c:${s.color}">${ico(s)}<b>${esc(s.title)}</b>${s.children.length?`<em>${s.children.length} فرعي</em>`:''}</a>`;
-function mediaH(q,x){const m=q.media.map((m,i)=>{const d=x?`<button class="mini r" data-act="delm" data-i="${i}">✕</button>`:'';
- if(m.k=='img')return `<figure class="sk"><a href="${esc(img(m.u))}" target="_blank"><img src="${esc(img(m.u))}" decoding="async" alt="" onload="this.classList.add('ld');this.closest('figure').classList.remove('sk')"></a>${d}</figure>`;
- return `<div class="file">${m.k=='pdf'?'📄':'↗'}<a href="${esc(m.u)}" target="_blank" rel="noopener">${esc(m.t||'فتح الملف')}</a>${d}</div>`+(m.k=='pdf'?`<iframe class="pdfv" src="${esc(m.u)}"></iframe>`:'')}).join('');
- return m?`<div class="media ${q.media.length==1&&q.media[0].k=='img'?'one':''}">${m}</div>`:''}
-const edv=(q,e)=>(e||plain(q.html))?`<div class="ed" ${e?'contenteditable="true" data-f="html"':''}>${q.html}</div>`:'';
+const card=s=>{let st=`--c:${s.color};`;if(s.cbg){const o=(s.cbo??30)/100;st+=`background-image:linear-gradient(rgba(0,0,0,${o}),rgba(0,0,0,${o})),url('${esc(img(s.cbg)).replace(/'/g,'%27')}');background-size:cover;background-position:center;color:#fff;`}if(s.tcu&&s.tc)st+=`color:${s.tc};`;
+ return `<a class="card" href="#/${s.id}" style="${st}">${ico(s)}<b>${esc(s.title)}</b>${s.children.length?`<em>${s.children.length} فرعي</em>`:''}</a>`};
+function mediaH(q,x){const ctl=(i,ed)=>x?`<span class="mc"><button data-act="mup" data-i="${i}">▲</button><button data-act="mdn" data-i="${i}">▼</button>${ed?`<button data-act="editqr" data-i="${i}">✎</button>`:''}<button class="r" data-act="delm" data-i="${i}">✕</button></span>`:'';
+ const rest=q.media.filter(z=>z.k!='qr');
+ const m=q.media.map((m,i)=>{if(m.k=='qr')return '';const d=ctl(i);
+  if(m.k=='img')return `<figure class="sk"><a href="${esc(img(m.u))}" target="_blank"><img src="${esc(img(m.u))}" decoding="async" alt="" onload="this.classList.add('ld');this.closest('figure').classList.remove('sk')"></a>${d}</figure>`;
+  return `<div class="file">${m.k=='pdf'?'📄':'↗'}<a href="${esc(m.u)}" target="_blank" rel="noopener">${esc(m.t||'فتح الملف')}</a>${d}</div>`+(m.k=='pdf'?`<iframe class="pdfv" src="${esc(m.u)}"></iframe>`:'')}).join('');
+ const qs=q.media.map((m,i)=>[m,i]).filter(([m])=>m.k=='qr'),
+ qh=qs.length?`<div class="qrg ${q.ql||'row'}" style="--qs:${q.qs||150}px">${qs.map(([m,i])=>`<div class="qri"><a href="${esc(m.u)}" target="_blank" rel="noopener" aria-label="${esc(m.t||m.u)}">${qrSvg(m.u,m.c||'#000000')}</a>${m.t?`<b>${esc(m.t)}</b>`:''}${x?`${ctl(i,1)}<button class="mini" style="position:static" data-act="qrdl" data-i="${i}">⬇ حفظ</button>`:''}</div>`).join('')}</div>`:'';
+ return(m?`<div class="media ${rest.length==1&&rest[0].k=='img'?'one':''}">${m}</div>`:'')+qh}
+const edv=(q,e)=>q.nt?'':((e||plain(q.html))?`<div class="ed" ${e?'contenteditable="true" data-f="html"':''}>${q.html}</div>`:'');
 const nPer=s=>(!admin&&(s.spread==2)&&innerWidth>=760)?2:1;
 function preload(P,a,b){for(let i=Math.max(0,a);i<=Math.min(P.length-1,b);i++)P[i].media.forEach(m=>{if(m.k=='img')(new Image).src=img(m.u)})}
 function schedH(s){const sc=s.schedule,A=admin,h=a=>A?a:'';
@@ -165,25 +189,25 @@ function schedH(s){const sc=s.schedule,A=admin,h=a=>A?a:'';
  return(A?`<div class="adm"><span>الجدول:</span><button data-act="padd">+ حصة</button><button data-act="pdel">− حصة</button><button data-act="dadd">+ يوم</button><button data-act="ddel">− يوم</button><span>الزوايا:</span>${[[0,'حادة'],[8,'متوسطة'],[16,'مدورة']].map(([v,l])=>`<button data-act="srad" data-v="${v}" class="${sc.r==v?'on':''}">${l}</button>`).join('')}<span>الترويسة:</span><input type="color" data-f="hc" value="${sc.hc||D.theme.p}"><span style="flex-basis:100%">اضغطي على أي خانة أو عنوان لتعديله</span></div>`:'')+
  `<div class="sch" style="--sr:${sc.r}px;${sc.hc?`--hc:${sc.hc}`:''}"><div class="tw"><table><tr><th class="dy">اليوم / الحصة</th>${sc.periods.map((p,i)=>`<th ${h(`data-act="ph" data-i="${i}"`)}>${esc(p.n)}<small dir="ltr">${esc(p.t)}</small></th>`).join('')}</tr>${sc.days.map((d,di)=>`<tr><th class="dy" ${h(`data-act="dy" data-i="${di}"`)}>${esc(d)}</th>${sc.periods.map((_,pi)=>cell(di,pi)).join('')}</tr>`).join('')}</table></div></div><div style="margin-top:8px"><button class="mini" style="position:static" onclick="print()">🖨 طباعة</button></div>`}
 function main(){const m=$('#main'),S=D.settings;
- if(cur=='home'){m.innerHTML=`<section class="hero"><div class="ph" data-act="login" style="${S.photo?`background-image:url('${esc(img(S.photo))}')`:''}">${S.photo?'':'👩‍🏫'}</div><div><small>${esc(S.tagline)}</small><h1>${esc(S.name)}</h1><p>${esc(S.role)}</p><div class="meta"><span>${esc(S.school)}</span><span>${esc(S.year)}</span></div></div></section><h2 class="sec-t hd">أقسام الملف</h2><div class="grid">${D.sections.map(card).join('')}</div>`;return}
+ if(cur=='home'){m.innerHTML=`<section class="hero">${decoH()}<div class="ph" data-act="login" style="${S.photo?`background-image:url('${esc(img(S.photo))}')`:''}">${S.photo?'':'👩‍🏫'}</div><div><small>${esc(S.tagline)}</small><h1>${esc(S.name)}</h1><p>${esc(S.role)}</p><div class="meta"><span>${esc(S.school)}</span><span>${esc(S.year)}</span></div></div></section><h2 class="sec-t hd">أقسام الملف</h2><div class="grid">${D.sections.map(card).join('')}</div>`;return}
  const f=find(cur);if(!f){location.hash='#/home';return}const s=f.s;pg=Math.max(0,Math.min(pg,s.pages.length-1));
  const n=nPer(s);if(n==2)pg-=pg%2;
  let h=`<div class="crumb"><a href="#/home">الرئيسية</a>${f.path.map(p=>` ‹ <a href="#/${p.id}">${esc(p.title)}</a>`).join('')}</div><h2 class="pt hd" style="--c:${s.color}">${ico(s)}${esc(s.title)}</h2>`;
- if(admin)h+=`<div class="adm"><button data-act="ren">✎ الاسم</button><span>لون القسم</span><input type="color" value="${s.color}" data-f="color"><span>الخلفية</span><input type="color" value="${s.bg||D.theme.bg}" data-f="bg"><button data-act="rbg">↺</button><button data-act="icon">🙂 أيقونة</button><button data-act="upicon">⬆ أيقونة من جهازي</button></div><div class="adm"><button data-act="up">▲</button><button data-act="down">▼</button><button data-act="addsec" data-p="${s.id}">+ قسم فرعي</button><button data-act="out">⇱ مستوى أعلى</button><button data-act="into">⇲ فرعي لما فوقه</button><button class="r" data-act="del">🗑 حذف</button></div>`;
+ if(admin)h+=`<div class="adm"><button data-act="ren">✎ الاسم</button><span>لون القسم</span><input type="color" value="${s.color}" data-f="color"><span>الخلفية</span><input type="color" value="${s.bg||D.theme.bg}" data-f="bg"><button data-act="rbg">↺</button><button data-act="icon">🙂 أيقونة</button><button data-act="upicon">⬆ أيقونة من جهازي</button><button data-act="cardfx">🖼 بطاقة القسم</button><button data-act="sbg">🖼 خلفية الصفحة</button></div><div class="adm"><button data-act="up">▲</button><button data-act="down">▼</button><button data-act="addsec" data-p="${s.id}">+ قسم فرعي</button><button data-act="out">⇱ مستوى أعلى</button><button data-act="into">⇲ فرعي لما فوقه</button><button class="r" data-act="del">🗑 حذف</button></div>`;
  if(s.type=='cv'&&pg==0)h+=`<div class="cvh"><div class="ph" style="${s.photo||S.photo?`background-image:url('${esc(img(s.photo||S.photo))}')`:''}">${s.photo||S.photo?'':'👩‍🏫'}</div><div><h3 class="hd">${esc(S.name)}</h3><div>${esc(S.role)}</div><div style="color:var(--mut)">${esc(S.school)}</div></div></div>`;
  if(s.children.length&&pg==0)h+=`<div class="grid">${s.children.map(card).join('')}</div>`;
  if(s.type=='schedule'&&pg==0)h+=schedH(s);
  const P=s.pages,p=P[pg],vw=s.view||'book',mode=(!admin&&!fb&&vw!='book')?vw:'book';
- if(admin)h+=`<div class="adm"><span>عرض الزوار:</span>${[['book','📖 كتاب'],['grid','▦ شبكة'],['list','☰ قائمة']].map(([k,l])=>`<button data-act="view" data-v="${k}" class="${vw==k?'on':''}">${l}</button>`).join('')}<span>الكتاب:</span>${[[1,'صفحة'],[2,'صفحتان']].map(([k,l])=>`<button data-act="spread" data-v="${k}" class="${s.spread==k?'on':''}">${l}</button>`).join('')}<button data-act="preview">👁 معاينة كزائر</button></div><div class="adm"><button data-act="addpg">+ صفحة جديدة</button><button class="r" data-act="delpg">🗑 حذف الصفحة</button><button data-act="pdfi">📖 استيراد PDF كصفحات</button></div>`;
+ if(admin)h+=`<div class="adm"><span>عرض الزوار:</span>${[['book','📖 كتاب'],['grid','▦ شبكة'],['list','☰ قائمة']].map(([k,l])=>`<button data-act="view" data-v="${k}" class="${vw==k?'on':''}">${l}</button>`).join('')}<span>الكتاب:</span>${[[1,'صفحة'],[2,'صفحتان']].map(([k,l])=>`<button data-act="spread" data-v="${k}" class="${s.spread==k?'on':''}">${l}</button>`).join('')}<button data-act="preview">👁 معاينة كزائر</button></div><div class="adm"><button data-act="addpg">+ صفحة جديدة</button><button data-act="pgl">⬆ رفع الصفحة</button><button data-act="pgr">⬇ تنزيل الصفحة</button><button class="r" data-act="delpg">🗑 حذف الصفحة</button><button data-act="pdfi">📖 استيراد PDF كصفحات</button>${p.nt?'<button data-act="edadd">+ إضافة مربع كتابة</button>':'<button class="r" data-act="eddel">🗑 حذف مربع الكتابة</button>'}</div>`;
  if(mode=='grid')h+=`<div class="gv">${P.map((q,i)=>{const im=q.media.find(x=>x.k=='img');return `<button class="gc" data-act="open" data-i="${i}">${im?`<img src="${esc(img(im.u))}" loading="lazy" alt="">`:`<div class="tx">${esc(plain(q.html).slice(0,110))}</div>`}<span>${i+1}</span></button>`}).join('')}</div>`;
- else if(mode=='list')h+=P.map(q=>`<div class="sp one ${D.theme.order=='lf'?'ltr':'rtl'}" style="margin-top:14px"><div class="pg">${edv(q,false)}${mediaH(q,false)}</div></div>`).join('');
+ else if(mode=='list')h+=P.filter(q=>q.media.length||(!q.nt&&plain(q.html))).map(q=>`<div class="sp one ${D.theme.order=='lf'?'ltr':'rtl'}" style="margin-top:14px"><div class="pg">${edv(q,false)}${mediaH(q,false)}</div></div>`).join('');
  else{const rtl=D.theme.dir!='ltr',dir=rtl?'rtl':'ltr',ord=D.theme.order=='lf'?'ltr':'rtl',end=Math.min(pg+n,P.length),lab=n==2&&end-pg==2?`صفحة ${pg+1}-${end} من ${P.length}`:`صفحة ${pg+1} من ${P.length}`,
   Bt=(d,l,dis)=>`<button data-act="pn" data-d="${d}" ${dis?'disabled':''}>${l}</button>`,
   bar=(P.length>n||admin)?`<div class="bkbar" style="direction:${dir}">${Bt(-1,rtl?'› السابقة':'‹ السابقة',pg<=0)}<span>${lab}</span>${Bt(1,rtl?'التالية ‹':'التالية ›',pg+n>=P.length)}</div>`:'';
   if(fb)h+='<button class="mini" style="position:static;margin-top:12px" data-act="back">▦ الرجوع للشبكة</button>';
   const tb=admin?`<div class="tb">${[['bold','<b>B</b>'],['formatBlock:h3','عنوان'],['formatBlock:p','نص'],['insertUnorderedList','• قائمة'],['insertOrderedList','1. قائمة'],['justifyRight','يمين'],['justifyCenter','وسط']].map(([c,l])=>`<button data-cmd="${c}">${l}</button>`).join('')}</div>`:'';
-  h+=bar+`<div class="sp ${n==2?'two':'one'} ${ord}" id="bk" style="direction:${ord}">`+P.slice(pg,pg+n).map(q=>`<div class="pg">${tb}${edv(q,admin)}${mediaH(q,admin)}</div>`).join('')+'</div>';
-  if(admin)h+='<div class="adm"><button data-act="upload">⬆ رفع صور / PDF</button><button data-act="addimg">+ صورة برابط</button><button data-act="addlink">+ رابط / ملف</button></div>';
+  h+=bar+`<div class="sp ${n==2?'two':'one'} ${ord}" id="bk" style="direction:${ord}">`+P.slice(pg,pg+n).map(q=>`<div class="pg">${q.nt?'':tb}${edv(q,admin)}${mediaH(q,admin)}</div>`).join('')+'</div>';
+  if(admin)h+='<div class="adm"><button data-act="upload">⬆ رفع صور / PDF</button><button data-act="addimg">+ صورة برابط</button><button data-act="addlink">+ رابط / ملف</button><button data-act="addqr">+ باركود</button><button data-act="qrset">⚙ توزيع الباركود</button></div>';
   if(P.length>n)h+=bar;preload(P,pg-n,pg+2*n+1)}
  m.innerHTML=h;if(fd){fx(window._oc,fd=='n'?1:-1);window._oc=null;fd=''}}
 const edge=(bk)=>{if(!bk)return null;const a=[...bk.querySelectorAll(':scope>.pg:not(.lf)')];if(!a.length)return null;const right=D.theme.dir!='ltr',ord=D.theme.order=='lf'?'ltr':'rtl';return a.length==1?a[0]:((right==(ord=='rtl'))?a[0]:a[a.length-1])};
@@ -203,8 +227,37 @@ function fx(old,d){const bk=$('#bk');if(!old||!bk||matchMedia('(prefers-reduced-
  if(d>0){const k=curl(old.el,old.w,old.h,rtl);pl(k.el,old.w,old.h);bk.appendChild(k.el);k.set(0);anim(k.set,0,1,800,()=>k.el.remove())}
  else{const u=old.el;u.className='pg';u.style.cssText=`position:absolute;margin:0;z-index:1;width:${old.w}px;height:${old.h}px;flex:none;box-shadow:none`;pl(u,old.w,old.h);bk.appendChild(u);
   const k=curl(nf.cloneNode(true),r.width,r.height,rtl);pl(k.el,r.width,r.height);bk.appendChild(k.el);nf.style.visibility='hidden';k.set(1);anim(k.set,1,0,800,()=>{k.el.remove();u.remove();nf.style.visibility=''})}}
-function ask(title,fields,cb,btn){const df=$('#df');df.innerHTML=`<h3 class="hd">${title}</h3>`+fields.map(([k,l,v,t,o])=>o?`<label>${l}<select name="${k}">${o.map(([a,b])=>`<option value="${a}" ${a==v?'selected':''}>${b}</option>`).join('')}</select></label>`:`<label>${l}<input name="${k}" type="${t||'text'}" value="${esc(v)}" autocomplete="off"></label>`).join('')+`<div class="row"><button class="go" value="ok">${btn||'حفظ'}</button><button value="x">إلغاء</button></div>`;
- const d=$('#dlg');d.onclose=()=>{if(d.returnValue=='ok')cb(Object.fromEntries(new FormData(df)))};d.showModal()}
+const HI='٠١٢٣٤٥٦٧٨٩';
+function nums(){if(D.theme.nums!='hi')return;for(const r of [$('#main'),$('#nav'),$('#ttl')]){const w=document.createTreeWalker(r,NodeFilter.SHOW_TEXT,{acceptNode:n=>/\d/.test(n.nodeValue)&&!n.parentElement.closest('[contenteditable],script,style,textarea,[data-nonum]')?1:3}),a=[];while(w.nextNode())a.push(w.currentNode);a.forEach(n=>n.nodeValue=n.nodeValue.replace(/\d/g,d=>HI[d]))}document.title=document.title.replace(/\d/g,d=>HI[d])}
+const DECO={lines:"<path d='M0 100L100 0M-25 75L75 -25M25 125L125 25'/>",geo:"<path d='M50 8L92 82H8Z'/><path d='M50 32L72 70H28Z'/>",leaf:"<path d='M14 86C14 42 46 14 86 14C86 58 54 86 14 86Z'/><path d='M14 86L62 38'/>",
+ islamic:"<rect x='20' y='20' width='60' height='60'/><rect x='20' y='20' width='60' height='60' transform='rotate(45 50 50)'/><circle cx='50' cy='50' r='15'/>",
+ chem:"<path d='M40 12h20M46 12v28L22 82a8 8 0 0 0 7 12h42a8 8 0 0 0 7-12L54 40V12'/><path d='M31 70h38'/><circle cx='84' cy='24' r='4'/><ellipse cx='84' cy='24' rx='13' ry='5' transform='rotate(35 84 24)'/>",
+ dots:"<circle cx='25' cy='25' r='4'/><circle cx='75' cy='75' r='4'/>",crescent:"<path d='M52 12A34 34 0 1 0 82 62A27 27 0 1 1 52 12Z'/><path d='M74 22l3.5 8 9 1-6.5 6 2 9-8-5-8 5 2-9-6.5-6 9-1z'/>"};
+function svgUri(k,c,txt){const b=k=='letters'?`<text x='50' y='68' font-size='56' text-anchor='middle' fill='${c}' stroke='none'>${esc((txt||'ح').slice(0,3))}</text>`:DECO[k]||'';
+ return "url('data:image/svg+xml,"+encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' width='100' height='100' fill='none' stroke='${c}' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>${b}</svg>`).replace(/'/g,'%27')+"')"}
+function decoH(){const t=D.theme,k=t.deco;if(!k||k=='none')return '';if(k=='ring')return '<div class="dc ring"></div>';
+ const z=+t.ds||90,mk=t.dside=='left'?'linear-gradient(to right,#000,#0000 70%)':t.dside=='right'?'linear-gradient(to left,#000,#0000 70%)':'none',cu=k=='custom';
+ const bg=cu?(t.dimg?`url('${esc(img(t.dimg)).replace(/'/g,'%27')}')`:'none'):svgUri(k,t.dc||'#ffffff',t.dtext);
+ return `<div class="dc" style="background-image:${bg};background-size:${cu?'cover':z+'px'};${cu?'background-repeat:no-repeat;background-position:center;':''}opacity:${(+t.do||0)/100};-webkit-mask-image:${mk};mask-image:${mk}"></div>`}
+let qrp;function needQr(){if(qrp)return;qrp=new Promise((ok,no)=>{const c=document.createElement('script');c.src='https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js';c.onload=ok;c.onerror=no;document.head.appendChild(c)});qrp.then(()=>route()).catch(()=>toast('تعذر تحميل أداة الباركود، تأكدي من الاتصال'))}
+function qrSvg(t,col){if(!window.qrcode){needQr();return '<svg viewBox="0 0 10 10"></svg>'}
+ try{qrcode.stringToBytes=qrcode.stringToBytesFuncs['UTF-8'];const q=qrcode(0,'M');q.addData(t);q.make();const n=q.getModuleCount();let d='';for(let r=0;r<n;r++)for(let c=0;c<n;c++)if(q.isDark(r,c))d+=`M${c} ${r}h1v1h-1z`;
+  return `<svg viewBox="-2 -2 ${n+4} ${n+4}" shape-rendering="crispEdges"><path d="${d}" fill="${esc(col||'#000000')}"/></svg>`}catch(e){return '<svg viewBox="0 0 10 10"></svg>'}}
+async function qrPng(m){const svg=qrSvg(m.u,m.c).replace('<svg ','<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1000" '),im=new Image();im.src='data:image/svg+xml;utf8,'+encodeURIComponent(svg);await im.decode();
+ const c=document.createElement('canvas');c.width=c.height=1000;const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,1000,1000);x.drawImage(im,0,0,1000,1000);c.toBlob(b=>{const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='qr.png';a.click()})}
+const FONTS=['IBM Plex Sans Arabic','Readex Pro','Tajawal','Cairo','Amiri','Almarai','El Messiri','Noto Naskh Arabic'].map(f=>[f,f]);
+const bg0=()=>({img:'',op:30,size:'cover',z:100,x:50,y:50});
+const upb=a=>`<button type="button" class="upb" data-act="${a}">⬆ رفع صورة من جهازي</button>`;
+function bgDlg(t,title){ask(title,[['img','رابط صورة الخلفية',t.img],['op','الشفافية % (٠ مخفية، ١٠٠ ظاهرة كاملة)',t.op,'number'],['size','الحجم',t.size,'',[['cover','تغطي الشاشة'],['contain','كاملة داخل الشاشة'],['zoom','حجم مخصص']]],['z','الحجم المخصص % (عند اختيار مخصص)',t.z,'number'],['x','الموضع أفقياً %',t.x,'number'],['y','الموضع رأسياً %',t.y,'number']],v=>{Object.assign(t,v,{op:+v.op,z:+v.z,x:+v.x,y:+v.y});touch();route()},'حفظ',upb(t===D.theme.bgi?'upbg':'upsbg'))}
+function decoDlg(){const t=D.theme;ask('الزخارف العلوية',[['deco','الزخرفة',t.deco,'',[['none','بدون'],['ring','حلقة (الافتراضي)'],['lines','خطوط'],['geo','أشكال هندسية'],['leaf','أوراق شجر'],['islamic','نقش إسلامي'],['letters','زخرفة حروف'],['crescent','هلال ونجمة'],['chem','أدوات معمل كيمياء'],['dots','نقاط'],['custom','صورتي (رفع)']]],['dc','لون الزخرفة',t.dc,'color'],['do','الشفافية % (١ - ١٠٠)',t.do,'number'],['ds','حجم الشكل بالبكسل',t.ds,'number'],['dside','التوزيع',t.dside,'',[['full','على كامل الإطار'],['left','من اليسار وتتلاشى'],['right','من اليمين وتتلاشى']]],['dtext','الحروف (لزخرفة الحروف)',t.dtext],['dimg','رابط صورة مخصصة',t.dimg]],v=>{Object.assign(t,v,{do:+v.do,ds:+v.ds});touch();route()},'حفظ',upb('updeco'))}
+function cardDlg(s){ask('بطاقة القسم: '+s.title,[['cbg','صورة خلفية للبطاقة (رابط)',s.cbg||''],['cbo','تعتيم الصورة %',s.cbo??30,'number'],['tcu','لون النص',s.tcu?'1':'0','',[['0','الافتراضي'],['1','مخصص (اللون أدناه)']]],['tc','اللون المخصص',s.tc||'#ffffff','color']],v=>{s.cbg=v.cbg.trim();s.cbo=+v.cbo;s.tcu=v.tcu=='1';s.tc=v.tc;touch();route()},'حفظ',upb('upcbg'))}
+function themeDlg(){const t=D.theme;ask('تصميم الموقع',[['p','اللون الأساسي',t.p,'color'],['a','لون التمييز',t.a,'color'],['bg','لون خلفية الصفحات',t.bg,'color'],['card','لون الورقة / البطاقات',t.card,'color'],['ink','لون الكتابة',t.ink,'color'],['r','استدارة الزوايا (٠ = حادة، حتى ٣٢)',t.r,'number'],['shape','شكل الصورة الشخصية',t.shape,'',[['arch','قوس'],['circle','دائرة'],['round','مستطيل مدور'],['square','مربع']]],['cs','شكل بطاقات الأقسام',t.cs,'',[['stripe','شريط جانبي'],['box','إطار كامل'],['solid','ممتلئة']]],['side','جهة الشريط الملوّن (البطاقات والقائمة والعناوين)',t.side,'',[['l','اليسار'],['r','اليمين']]],['logo','رابط الشعار (أو زر شعار)',t.logo]],v=>{Object.assign(t,v,{r:Math.max(0,Math.min(32,+v.r||0))});touch();route()})}
+function detDlg(){const t=D.theme;ask('تفاصيل التصميم',[['ff','خط النصوص',t.ff,'',FONTS],['fh','خط العناوين',t.fh,'',FONTS],['fs','حجم الخط الأساسي (١٢ - ٢٦)',t.fs,'number'],['lh','تباعد الأسطر (١.٣ - ٢.٣)',t.lh,'number'],['mw','عرض المحتوى بالبكسل (٦٠٠ - ١٤٠٠)',t.mw,'number'],
+ ['nums','شكل الأرقام',t.nums,'',[['hi','هندية ١٢٣'],['en','إنجليزية 123']]],['order','ترتيب الصفحتين في الكتاب المفتوح',t.order,'',[['rf','الأولى يمين والثانية يسار (عربي)'],['lf','الأولى يسار والثانية يمين']]],['dir','اتجاه التقليب',t.dir,'',[['rtl','من اليمين لليسار'],['ltr','من اليسار لليمين']]],['mv','جهة دخول القائمة والأقسام',t.mv,'',[['r','من اليمين'],['l','من اليسار']]],
+ ['topc','لون الشريط العلوي',t.topc||t.p,'color'],['navc','لون خلفية القائمة الجانبية',t.navc||t.card,'color'],['navt','لون نص القائمة',t.navt||t.ink,'color'],['heroc','لون خلفية الواجهة',t.heroc||t.p,'color'],['herot','لون نص الواجهة',t.herot||'#ffffff','color'],['ctc','لون نص البطاقات',t.ctc||t.ink,'color']],
+ v=>{Object.assign(t,v,{fs:Math.max(12,Math.min(26,+v.fs||16)),lh:Math.max(1.2,Math.min(2.4,+v.lh||1.8)),mw:Math.max(600,Math.min(1400,+v.mw||1000))});touch();route()},'حفظ','<button type="button" class="upb" data-act="detreset">↺ إعادة ألوان الشريط والقائمة والواجهة للافتراضي</button>')}
+function ask(title,fields,cb,btn,extra){const df=$('#df');df.innerHTML=`<h3 class="hd">${title}</h3>`+fields.map(([k,l,v,t,o])=>o?`<label>${l}<select name="${k}">${o.map(([a,b])=>`<option value="${a}" ${a==v?'selected':''}>${b}</option>`).join('')}</select></label>`:`<label>${l}<input name="${k}" type="${t||'text'}" ${t=='number'?'step="any"':''} value="${esc(v)}" autocomplete="off"></label>`).join('')+(extra||'')+`<div class="row"><button class="go" value="ok">${btn||'حفظ'}</button><button value="x">إلغاء</button></div>`;
+ const d=$('#dlg');d.returnValue='';d.onclose=()=>{if(d.returnValue=='ok')cb(Object.fromEntries(new FormData(df)))};d.showModal()}
 function toast(t,ms){const e=$('#toast');e.textContent=t;e.style.display='block';clearTimeout(e._t);e._t=setTimeout(()=>e.style.display='none',ms||3500)}
 async function doLogin(){let needs;try{const r=await fetch('/api/data?status',{cache:'no-store'});needs=(await r.json()).setup}catch(e){return toast('تعذر الاتصال بخدمة الحفظ. تأكدي أن مجلد netlify/functions مرفوع وأن النشر نجح في Netlify.',9000)}
  if(needs)return ask('إنشاء كلمة مرور التعديل',[['a','كلمة المرور (٨ أحرف على الأقل)','','password'],['b','أعيدي كتابتها','','password']],async v=>{if(v.a.length<8)return toast('قصيرة، لازم ٨ أحرف أو أكثر');if(v.a!==v.b)return toast('كلمتا المرور غير متطابقتين');
@@ -240,18 +293,34 @@ document.addEventListener('click',async e=>{const b=e.target.closest('[data-act]
  if(a=='pdfi')return $('#pi').click();
  if(a=='preview'){pv=true;admin=false;return route()}
  if(a=='upload'){iconMode=null;return $('#fi').click()}
- if(a=='uplogo'||a=='upphoto'||a=='upicon'){iconMode=a;return $('#fi').click()}
+ if(['uplogo','upphoto','upicon','upbg','upsbg','upcbg','updeco'].includes(a)){const d=$('#dlg');if(d.open)d.close('x');iconMode=a;return $('#fi').click()}
+ if(a=='detreset'){Object.assign(D.theme,{topc:'',navc:'',navt:'',heroc:'',herot:'',ctc:''});$('#dlg').close('x');touch();return route()}
  if(a=='login'){if(admin)return;return doLogin()}
  if(a=='chpw')return ask('تغيير كلمة المرور',[['a','كلمة المرور الجديدة (٨ أحرف على الأقل)','','password']],async v=>{if(v.a.length<8)return toast('قصيرة، لازم ٨ أحرف');const r=await fetch('/api/data',{method:'POST',headers:{'x-admin-password':pw,'content-type':'application/json'},body:JSON.stringify({change:v.a})});if(r.ok){pw=v.a;sessionStorage.pw=v.a;toast('تم تغيير كلمة المرور')}else toast('فشل التغيير')},'تغيير');
  if(a=='save')return save();
  if(a=='logout'){admin=false;pw='';sessionStorage.removeItem('pw');return route()}
  if(a=='settings'){const S=D.settings;return ask('بيانات الواجهة',[['name','الاسم',S.name],['role','المسمى الوظيفي',S.role],['school','المدرسة',S.school],['year','العام الدراسي',S.year],['tagline','عنوان الملف',S.tagline],['photo','رابط الصورة الشخصية (أو استخدمي زر صورتي)',S.photo]],v=>{Object.assign(D.settings,v);touch();route()})}
- if(a=='theme'){const t=D.theme;return ask('تصميم الموقع',[...SET.map(([k,l,,ty])=>[k,l,t[k],ty]),['r','استدارة الزوايا (٠ = حادة، حتى ٣٢)',t.r,'number'],['shape','شكل الصورة الشخصية',t.shape,'',[['arch','قوس'],['circle','دائرة'],['round','مستطيل مدور'],['square','مربع']]],['cs','شكل بطاقات الأقسام',t.cs,'',[['stripe','شريط جانبي'],['box','إطار كامل'],['solid','ممتلئة']]],['order','ترتيب الصفحتين في الكتاب المفتوح',t.order,'',[['rf','الأولى يمين والثانية يسار (عربي)'],['lf','الأولى يسار والثانية يمين']]],['dir','اتجاه التقليب (الحركة والسحب والأزرار)',t.dir,'',[['rtl','من اليمين لليسار'],['ltr','من اليسار لليمين']]],['logo','رابط الشعار (أو زر شعار)',t.logo]],v=>{Object.assign(D.theme,v,{r:Math.max(0,Math.min(32,+v.r||0))});touch();route()})}
+ if(a=='theme')return themeDlg();
+ if(a=='det')return detDlg();
+ if(a=='deco')return decoDlg();
+ if(a=='bgd')return bgDlg(D.theme.bgi,'خلفية الموقع');
  if(a=='addsec'){const t=prompt('اسم القسم الجديد:');if(!t)return;const sch=confirm('هل هذا القسم جدول حصص؟\nموافق = جدول، إلغاء = قسم عادي');
   const n={id:uid(),title:t,color:COL[Math.floor(Math.random()*COL.length)],type:sch?'schedule':'page',icon:'',bg:'',view:'book',spread:1,pages:[{html:'<p>اكتبي المحتوى هنا…</p>',media:[]}],photo:'',schedule:sch?newSched():null,children:[]};
   const p=b.dataset.p?find(b.dataset.p).s.children:D.sections;p.push(n);touch();location.hash='#/'+n.id;return route()}
  if(!s)return;
  if(a=='ren'){const t=prompt('الاسم الجديد:',s.title);if(t){s.title=t;touch();route()}}
+ else if(a=='cardfx')cardDlg(s)
+ else if(a=='sbg')bgDlg(s.bgi||(s.bgi=bg0()),'خلفية هذه الصفحة')
+ else if(a=='mup'){const M=s.pages[pg].media;if(i>0){[M[i-1],M[i]]=[M[i],M[i-1]];touch();route()}}
+ else if(a=='mdn'){const M=s.pages[pg].media;if(i<M.length-1){[M[i+1],M[i]]=[M[i],M[i+1]];touch();route()}}
+ else if(a=='pgl'){if(pg>0){[s.pages[pg-1],s.pages[pg]]=[s.pages[pg],s.pages[pg-1]];pg--;touch();route()}}
+ else if(a=='pgr'){if(pg<s.pages.length-1){[s.pages[pg+1],s.pages[pg]]=[s.pages[pg],s.pages[pg+1]];pg++;touch();route()}}
+ else if(a=='eddel'){if(confirm('حذف مربع الكتابة لهذه الصفحة؟')){s.pages[pg].nt=true;s.pages[pg].html='';touch();route()}}
+ else if(a=='edadd'){const q=s.pages[pg];q.nt=false;if(!plain(q.html))q.html='<p></p>';touch();route()}
+ else if(a=='addqr')ask('إضافة باركود',[['u','الرابط (يفتح عند المسح أو الضغط)',''],['t','العنوان تحت الباركود (اختياري)',''],['c','لون الباركود','#000000','color']],v=>{if(!v.u.trim())return;s.pages[pg].media.push({k:'qr',u:v.u.trim(),t:v.t.trim(),c:v.c});touch();route()},'إضافة')
+ else if(a=='editqr'){const m=s.pages[pg].media[i];ask('تعديل الباركود',[['u','الرابط',m.u],['t','العنوان',m.t||''],['c','اللون',m.c||'#000000','color']],v=>{Object.assign(m,{u:v.u.trim(),t:v.t.trim(),c:v.c});touch();route()})}
+ else if(a=='qrset'){const q=s.pages[pg];ask('توزيع الباركود في هذه الصفحة',[['ql','التوزيع',q.ql||'row','',[['row','بجانب بعض'],['col','فوق بعض'],['grid','شبكة (اثنين في الصف)']]],['qs','حجم الباركود بالبكسل (٨٠ - ٣٠٠)',q.qs||150,'number']],v=>{q.ql=v.ql;q.qs=Math.max(80,Math.min(300,+v.qs||150));touch();route()})}
+ else if(a=='qrdl')qrPng(s.pages[pg].media[i])
  else if(a=='icon')ask('أيقونة القسم',[['i','إيموجي أو رابط صورة (اتركيه فارغًا للحذف)',s.icon]],v=>{s.icon=v.i.trim();touch();route()});
  else if(a=='rbg'){s.bg='';touch();route()}
  else if(a=='view'){s.view=b.dataset.v;touch();route()}
@@ -279,7 +348,9 @@ document.addEventListener('click',async e=>{const b=e.target.closest('[data-act]
 document.addEventListener('click',e=>{if(e.target.closest('nav a'))document.body.classList.remove('open')});
 addEventListener('hashchange',route);
 $('#fi').addEventListener('change',async e=>{const fs=[...e.target.files];e.target.value='';const mode=iconMode;iconMode=null;if(!fs.length)return;
- if(mode){const m=await up(fs[0]);if(!m)return;if(mode=='uplogo')D.theme.logo=m.u;else if(mode=='upphoto')D.settings.photo=m.u;else{const f=find(cur);if(f)f.s.icon=m.u}touch();return route()}
+ if(mode){const m=await up(fs[0]);if(!m)return;const f0=find(cur),S=f0&&f0.s,T=D.theme;
+  if(mode=='uplogo')T.logo=m.u;else if(mode=='upphoto')D.settings.photo=m.u;else if(mode=='upbg')T.bgi.img=m.u;else if(mode=='updeco'){T.dimg=m.u;T.deco='custom'}else if(S&&mode=='upsbg')(S.bgi=S.bgi||bg0()).img=m.u;else if(S&&mode=='upcbg')S.cbg=m.u;else if(S)S.icon=m.u;
+  touch();route();if(mode=='upbg')bgDlg(T.bgi,'خلفية الموقع');if(mode=='upsbg'&&S)bgDlg(S.bgi,'خلفية هذه الصفحة');if(mode=='upcbg'&&S)cardDlg(S);if(mode=='updeco')decoDlg();return}
  const f=find(cur);if(!f)return;const s=f.s,ni=fs.filter(x=>x.type.startsWith('image/')).length;
  const sep=ni>1&&confirm('اخترتِ '+ni+' صور.\nموافق = كل صورة في صفحة مستقلة (للشبكة والكتاب)\nإلغاء = كلها في هذه الصفحة');let first=null;
  for(const file of fs){const m=await up(file);if(!m)continue;if(sep&&m.k=='img'){const q=slot(s);if(first==null)first=pg;q.media.push(m)}else s.pages[pg].media.push(m)}
